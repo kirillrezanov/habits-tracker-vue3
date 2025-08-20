@@ -1,87 +1,7 @@
 <script setup lang="ts">
-  import { reactive, computed } from 'vue'
+  import { useHabitsStore } from '@/stores/HabitsStore'
 
-  interface State {
-    habits : Habit[],
-    habitForm : HabitForm
-  }
-
-  interface Habit {
-    title : string,
-    duration : number,
-    estimated : number
-    completed : boolean,
-    id : number
-  }
-
-  interface HabitsStats {
-    completed : number,
-    uncompleted : number
-  }
-
-  interface HabitForm {
-    title : string,
-    duration : number
-  }
-
-  const state = reactive<State>({
-    habits : [
-      {
-        id : Date.now(),
-        title : "Тест",
-        completed : false,
-        duration : 2,
-        estimated : 1
-      }
-    ],
-    habitForm : {
-      title : "",
-      duration : 21
-    }
-  });
-
-  function addhabit() : void {
-    if(!state.habitForm.title || state.habitForm.duration < 1) return;
-
-    state.habits.push({
-      title : state.habitForm.title,
-      duration : state.habitForm.duration,
-      completed : false,
-      id : Date.now(),
-      estimated : 0
-    });
-
-    state.habitForm.title = '';
-    state.habitForm.duration = 21;
-  }
-
-  function addDay(habit : Habit) : void {
-    habit.estimated += 1;
-
-    if(habit.estimated >= habit.duration) habit.completed = true;
-  }
-
-  function rmDay(habit : Habit) : void {
-    habit.estimated -= 1;
-
-    if(habit.estimated < habit.duration) habit.completed = false;
-  }
-
-  function rmHabit(habit : Habit) : void {
-    state.habits = state.habits.filter(habitElem => habit.id != habitElem.id);
-  }
-
-  const habitsStats = computed<HabitsStats>(() => {
-    let completed : number = 0;
-    let uncompleted : number = 0;
-
-    state.habits.forEach(habit => habit.completed ? completed += 1 : uncompleted += 1);
-
-    return {
-      completed,
-      uncompleted
-    }
-  });
+  const state = useHabitsStore();
 </script>
 
 <template>
@@ -108,8 +28,8 @@
         <div class="card-header">Список привычек</div>
         <div class="card-body">
           <div class="alert alert-info">
-            <div class="mb-3">Завершено привычек: {{ habitsStats.completed }} </div>
-            <div>Привычки в процессе: {{ habitsStats.uncompleted }}</div>
+            <div class="mb-3">Завершено привычек: {{ state.habitsStats.completed }} </div>
+            <div>Привычки в процессе: {{ state.habitsStats.uncompleted }}</div>
           </div>
             <div class="card mb-3" v-for="habit in state.habits" :key="habit.id">
               <div class="card-header">
