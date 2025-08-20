@@ -50,9 +50,9 @@
                       {{ habit.estimated }}
                     </div>
                   </div>
-                  <button class="btn btn-outline-primary mt-3" @click="addDay(habit)" v-if="habit.estimated < habit.duration">Добавить день</button> &nbsp;
-                  <button class="btn btn-outline-danger mt-3" @click="rmDay(habit)" v-if="habit.estimated > 0">Вычесть день</button> &nbsp;
-                  <button class="btn btn-outline-danger mt-3" @click="rmHabit(habit)">Удалить привычку</button>
+                  <button class="btn btn-outline-primary mt-3" @click="state.addDay(habit)" v-if="habit.estimated < habit.duration">Добавить день</button> &nbsp;
+                  <button class="btn btn-outline-danger mt-3" @click="state.rmDay(habit)" v-if="habit.estimated > 0">Вычесть день</button> &nbsp;
+                  <button class="btn btn-outline-danger mt-3" @click="state.rmHabit(habit)">Удалить привычку</button>
                 </div>
               </div>
             </div>
