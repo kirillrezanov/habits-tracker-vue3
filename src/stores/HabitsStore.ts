@@ -21,22 +21,15 @@ interface HabitForm {
 
 
 export const useHabitsStore = defineStore('habits', () => {
-    let habits = ref<Habit[]>([
-        {
-            id: Date.now(),
-            title: "Тест",
-            completed: false,
-            duration: 2,
-            estimated: 1
-        }
-    ]);
+    let habits = ref<Habit[]>(JSON.parse(localStorage.getItem('habits')) || []);
 
     const habitForm = ref<HabitForm>({
         title: "",
         duration: 21
     })
 
-    function addhabit(): void {
+    function addHabit(): void {
+
         if (!habitForm.value.title || habitForm.value.duration < 1) return;
 
         habits.value.push({
@@ -47,24 +40,36 @@ export const useHabitsStore = defineStore('habits', () => {
             estimated: 0
         });
 
+        updateLocalStorage();
+
         habitForm.value.title = '';
         habitForm.value.duration = 21;
+    }
+
+    function updateLocalStorage() {
+        localStorage.setItem("habits", JSON.stringify(habits.value));
     }
 
     function addDay(habit: Habit): void {
         habit.estimated += 1;
 
         if (habit.estimated >= habit.duration) habit.completed = true;
+
+        updateLocalStorage();
     }
 
     function rmDay(habit: Habit): void {
         habit.estimated -= 1;
 
         if (habit.estimated < habit.duration) habit.completed = false;
+
+        updateLocalStorage();
     }
 
     function rmHabit(habit: Habit): void {
         habits.value = habits.value.filter(habitElem => habit.id != habitElem.id);
+
+        updateLocalStorage();
     }
 
     const habitsStats = computed<HabitsStats>(() => {
@@ -82,7 +87,7 @@ export const useHabitsStore = defineStore('habits', () => {
     return {
         habits,
         habitForm,
-        addhabit,
+        addHabit,
         addDay,
         rmDay,
         rmHabit,
