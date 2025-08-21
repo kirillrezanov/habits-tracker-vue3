@@ -1,6 +1,6 @@
 <script setup lang="ts">
     interface Props {
-        value: string | number,
+        value: string,
         type: string | "text",
         label: string,
         min?: number,
@@ -9,16 +9,12 @@
         required? : boolean
     }
 
+    const value = defineModel<string>();
+
     defineProps<Props>();
-
-    const emits = defineEmits('change');
-
-    function change(e : Event) : void {
-        emits('change');
-    }
 </script>
 
 <template>
-    <span class="form-label">{{ label }}<span v-if="required">*</span></span>
-    <input :type="type" :value="value" @change="change" :min="min" :max="max" :placeholder="placeholder" class="form-control mt-3" :required="required">
+    <div class="form-label mb-3" v-if="label">{{ label }}<span v-if="required">*</span></div>
+    <input :type="type" v-model="value" :min="min" :max="max" :placeholder="placeholder" class="form-control" :required="required">
 </template>

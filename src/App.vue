@@ -16,8 +16,7 @@
       <div class="card mb-3">
         <div class="card-header">Новая привычка</div>
         <div class="card-body">
-          <HabitForm v-model:title="state.habitForm.title" v-model:duration="state.habitForm.duration"
-            @add="state.addHabit" />
+          <HabitForm @add="state.addHabit" />
         </div>
       </div>
       <div class="card">

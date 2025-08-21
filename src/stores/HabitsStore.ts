@@ -14,27 +14,16 @@ interface HabitsStats {
     uncompleted: number
 }
 
-interface HabitForm {
-    title: string,
-    duration: number
-}
-
-
 export const useHabitsStore = defineStore('habits', () => {
     let habits = ref<Habit[]>(JSON.parse(localStorage.getItem('habits')) || []);
 
-    const habitForm = ref<HabitForm>({
-        title: "",
-        duration: 21
-    })
+    function addHabit(payload : {title : string, duration : number}): void {
 
-    function addHabit(): void {
-
-        if (!habitForm.value.title || habitForm.value.duration < 1) return;
+        if (!payload.title || payload.duration < 1) return;
 
         habits.value.push({
-            title: habitForm.value.title,
-            duration: habitForm.value.duration,
+            title: payload.title,
+            duration: payload.duration,
             completed: false,
             id: Date.now(),
             estimated: 0
@@ -42,8 +31,8 @@ export const useHabitsStore = defineStore('habits', () => {
 
         updateLocalStorage();
 
-        habitForm.value.title = '';
-        habitForm.value.duration = 21;
+        payload.title = '';
+        payload.duration = 21;
     }
 
     function updateLocalStorage() {
@@ -86,7 +75,6 @@ export const useHabitsStore = defineStore('habits', () => {
 
     return {
         habits,
-        habitForm,
         addHabit,
         addDay,
         rmDay,
