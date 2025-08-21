@@ -15,7 +15,8 @@
         duration : 20
     });
 
-    function add() : void {
+    function add(e : Event) : void {
+        e.preventDefault();
         emits('add', {
             title : habitForm.title,
             duration : habitForm.duration
@@ -27,13 +28,15 @@
 </script>
 
 <template>
-    <div class="row mb-3">
-        <div class="col-md-6 form-group">
-            <Input :label="'Название привычки'" v-model="habitForm.title" type="text" :required="true"/>
+    <form action="" method="POST" @submit="add">
+        <div class="row mb-3">
+            <div class="col-md-6 form-group">
+                <Input label="Название привычки" v-model="habitForm.title" type="text" :required="true"/>
+            </div>
+            <div class="col-md-6 form-group">
+                <Input label="Длительность выработки привычки" v-model="habitForm.duration" type="number" :required="true"/>
+            </div>
         </div>
-        <div class="col-md-6 form-group">
-            <Input :label="'Длительность выработки привычки'" v-model="habitForm.duration" type="number" :required="true"/>
-        </div>
-    </div>
-    <Button :classes="['btn', 'btn-outline-success']" @click="add">Добавить привычку</Button>
+        <Button :classes="['btn', 'btn-outline-success']">Добавить привычку</Button>
+    </form>
 </template>

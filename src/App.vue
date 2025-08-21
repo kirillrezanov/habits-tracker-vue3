@@ -17,7 +17,7 @@
       <Card title="Новая привычка">
         <HabitForm @add="state.addHabit" />
       </Card>
-      <Card :classes="['mt-3', 'mb-3']" title="Список привычек">
+      <Card :classes="['mt-3', 'mb-3']" title="Список привычек" v-if="state.habits.length > 0">
         <Alert class="alert alert-info">
           <div class="mb-3">Завершено привычек: {{ state.habitsStats.completed }} </div>
           <div>Привычки в процессе: {{ state.habitsStats.uncompleted }}</div>
