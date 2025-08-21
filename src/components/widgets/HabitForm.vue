@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import { reactive } from 'vue';
-import Button from '../ui/Button.vue';
+    import Button from '../ui/Button.vue';
     import Input from '../ui/Input.vue';
 
     interface HabitForm {

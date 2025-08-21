@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
     interface Props {
-        placeholder ? : string,
+        placeholder ? : string | number,
         min : number,
         max : number
     }
