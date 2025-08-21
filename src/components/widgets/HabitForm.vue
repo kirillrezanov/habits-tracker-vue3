@@ -20,6 +20,9 @@
             title : habitForm.title,
             duration : habitForm.duration
         });
+
+        habitForm.title = "";
+        habitForm.duration = 21;
     }
 </script>
 

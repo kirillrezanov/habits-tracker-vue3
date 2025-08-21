@@ -30,9 +30,6 @@ export const useHabitsStore = defineStore('habits', () => {
         });
 
         updateLocalStorage();
-
-        payload.title = '';
-        payload.duration = 21;
     }
 
     function updateLocalStorage() {
